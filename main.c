@@ -1,10 +1,28 @@
 #include "get_next_line.h"
 
-int main(void)
+#define HEY ft_putstr("hey\n");
+
+int main(int argc, char **argv)
 {
 	char	*test;
+	int fd1;
+	int fd2;
+	int line;
 
-	while (get_next_line(0, &test))
+	fd1 = open(argv[1], O_RDONLY);
+	fd2 = open(argv[2], O_RDONLY);
+	line = 0;
+
+	while (get_next_line(fd1, &test))
+	{
+		ft_putnbr(++line);
+		ft_putstr(" - ");
+		ft_putendl(test);
+		free(test);
+		if (line > 20)
+			ft_exit("hey");
+	}
+	while (get_next_line(fd2, &test))
 	{
 		ft_putendl(test);
 		free(test);

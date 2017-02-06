@@ -5,9 +5,10 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdint.h>
-# include "libft.h"
+# include "libft/libft.h"
 
-# define BUFF_SIZE 4096
+# define BUFF_SIZE 2048
 
+int		get_next_line(int fd, char **line);
 
 #endif
