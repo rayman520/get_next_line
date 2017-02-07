@@ -6,7 +6,7 @@
 /*   By: cpierre <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 15:19:46 by cpierre           #+#    #+#             */
-/*   Updated: 2017/02/06 16:05:23 by cpierre          ###   ########.fr       */
+/*   Updated: 2017/02/07 14:51:53 by cpierre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,29 @@
 
 #define HEY ft_putstr("hey\n");
 
-static int	ft_use_leftover(char **line, char *buf, char *current)
+static int	ft_use_leftover(char **line, char *buf, char **current)
 {
 	char *tmp;
+	char *tmp2;
 
 	tmp = *line;
-	if (*current == '\0')
+	if (**current == '\0')
 	{
-		current++;
+		HEY
+		(*current)++;
 		*line = NULL;
 		return (1);
 	}
-	if ((current = ft_strchr(buf, '\n')))
+	tmp2 = *current;
+	if ((*current = ft_strchr(tmp2, '\n')))
 	{
-		*current = '\0';
-		*line = ft_strjoin(tmp, buf);
+		*(*current)++ = '\0';
+		*line = ft_strjoin(tmp, tmp2);
 		return (1);
 	}
 	else
 	{
-	   	*(current++) = '\0';
-		*line = ft_strjoin(tmp, buf);
+		*line = ft_strjoin(tmp, tmp2);
 	}
 	free(tmp);
 	return (0);
@@ -52,7 +54,7 @@ int			get_next_line(int fd, char **line)
 		return (-1);
 	if (current != NULL)
 	{
-		if (ft_use_leftover(line, buf, current) == 1)
+		if (ft_use_leftover(line, buf, &current) == 1)
 			return (1);
 	}
   	while ((red = read(fd, buf, BUFF_SIZE)) > 0)
@@ -61,9 +63,8 @@ int			get_next_line(int fd, char **line)
 		buf[red] = 0;
 		if ((current = ft_strchr(buf, '\n')))
 		{
-			*current = '\0';
+			*current++ = '\0';
 			*line = ft_strjoin(tmp, buf);
-			buf = current;
 			return (1);
 		}
 		else

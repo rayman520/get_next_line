@@ -19,13 +19,5 @@ int main(int argc, char **argv)
 		ft_putstr(" - ");
 		ft_putendl(test);
 		free(test);
-		if (line > 20)
-			ft_exit("hey");
 	}
-	while (get_next_line(fd2, &test))
-	{
-		ft_putendl(test);
-		free(test);
-	}
-	return (0);
 }
